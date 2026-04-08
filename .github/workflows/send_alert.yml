@@ -1,0 +1,30 @@
+name: 帰宅時間レポート — 18:00 Slackアラート送信
+
+on:
+  schedule:
+    # JST 18:00 = UTC 09:00
+    - cron: "0 9 * * *"
+  workflow_dispatch:  # 手動実行（テスト用）
+
+jobs:
+  send-alert:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Send Slack alert
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_USER_ID: ${{ secrets.SLACK_USER_ID }}
+        run: python main_alert.py

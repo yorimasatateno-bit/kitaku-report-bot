@@ -1,0 +1,59 @@
+name: 帰宅時間レポート — 返信チェック＆LINE送信
+
+on:
+  schedule:
+    # JST 18:00〜23:00 の間、15分おきに実行
+    # UTC 09:00〜14:00 = */15 9-13 * * *  (〜13:45 UTC = 22:45 JST)
+    # 23:00 JST カバーのため14時台も追加
+    - cron: "*/15 9-14 * * *"
+  workflow_dispatch:  # 手動実行（テスト用）
+    inputs:
+      dry_run:
+        description: "LINE送信をスキップする（true/false）"
+        required: false
+        default: "false"
+
+jobs:
+  check-and-send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    # archive/ の変更をコミット＆プッシュするために書き込み権限が必要
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install Playwright Chromium
+        run: playwright install chromium --with-deps
+
+      - name: Install surge CLI
+        run: npm install -g surge
+
+      - name: Check reply and send
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_USER_ID: ${{ secrets.SLACK_USER_ID }}
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_GROUP_ID: ${{ secrets.LINE_GROUP_ID }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: python main_check.py
+
+      - name: Commit and push archive
+        run: |
+          git config user.email "github-actions@github.com"
+          git config user.name "GitHub Actions [kitaku-bot]"
+          git add archive/
+          git diff --staged --quiet || git commit -m "📸 帰宅レポート: $(TZ=Asia/Tokyo date '+%Y-%m-%d')"
+          git push
