@@ -2,8 +2,8 @@ name: 帰宅時間レポート — 18:00 Slackアラート送信
 
 on:
   schedule:
-    # JST 18:00 = UTC 09:00
-    - cron: "0 9 * * *"
+    # JST 18:00 = UTC 09:00、平日（月〜金）のみ
+    - cron: "0 9 * * 1-5"
   workflow_dispatch:  # 手動実行（テスト用）
 
 jobs:
