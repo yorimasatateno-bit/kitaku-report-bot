@@ -135,13 +135,9 @@ def _deploy_archive() -> bool:
         print("⚠️  SURGE_TOKEN が未設定のためデプロイをスキップします。")
         return False
 
-    cmd = [
-        "surge",
-        str(ARCHIVE_DIR),
-        "kitaku-archive.surge.sh",  # https:// なし
-        "--token", surge_token,
-    ]
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    cmd = ["surge", str(ARCHIVE_DIR), "kitaku-archive.surge.sh"]
+    env = {**os.environ, "SURGE_TOKEN": surge_token}
+    result = subprocess.run(cmd, capture_output=True, text=True, env=env)
     if result.returncode == 0:
         print("🚀 surge.sh デプロイ完了: https://kitaku-archive.surge.sh")
         return True
