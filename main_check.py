@@ -91,11 +91,14 @@ def main():
         png_saved = True
 
     # ── 8. surge.sh にデプロイ（LINE送信前に画像URLを有効化）──
-    _deploy_archive()
+    deployed = _deploy_archive()
 
     # ── 9. LINEに送信 ──
     if DRY_RUN:
         print(f"[DRY RUN] LINE送信をスキップ。URL: {png_url}")
+    elif not deployed:
+        print("❌ surgeデプロイ失敗のためLINE送信をスキップします。次回チェック時に再試行します。")
+        return
     else:
         print("📱 LINEに送信中...")
         result = send_image(png_url)
@@ -120,28 +123,31 @@ def main():
     index_html = generate_index_html(manifest)
     (ARCHIVE_DIR / "index.html").write_text(index_html, encoding="utf-8")
     print("📄 アーカイブ index.html を更新しました。")
-    _deploy_archive()
+    _deploy_archive()  # index更新のデプロイは失敗しても致命的ではないため続行
 
     print("🎉 完了！")
 
 
-def _deploy_archive():
+def _deploy_archive() -> bool:
+    """surge.sh にデプロイする。成功したら True、失敗したら False を返す。"""
     surge_token = os.environ.get("SURGE_TOKEN")
     if not surge_token:
         print("⚠️  SURGE_TOKEN が未設定のためデプロイをスキップします。")
-        return
+        return False
 
     cmd = [
         "surge",
         str(ARCHIVE_DIR),
-        "https://kitaku-archive.surge.sh",
+        "kitaku-archive.surge.sh",  # https:// なし
         "--token", surge_token,
     ]
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode == 0:
         print("🚀 surge.sh デプロイ完了: https://kitaku-archive.surge.sh")
+        return True
     else:
-        print(f"❌ surge デプロイ失敗:\n{result.stderr}")
+        print(f"❌ surge デプロイ失敗:\nstdout: {result.stdout}\nstderr: {result.stderr}")
+        return False
 
 
 if __name__ == "__main__":
