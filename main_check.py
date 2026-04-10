@@ -1,12 +1,12 @@
 """
-main_check.py — 15分おきに実行。Slack返信を確認し、カード生成→LINE送信→アーカイブ更新を行う。
+main_check.py — 15分おきに実行。Slack返信を確認し、カード生成まで行う。
+surge デプロイと LINE 送信は YAML ワークフローのステップに委譲する。
 """
 from __future__ import annotations
 
 import json
 import os
-import subprocess
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 
 import pytz
@@ -15,21 +15,17 @@ from src.slack_client import open_dm_channel, get_today_alert_ts, get_thread_rep
 from src.ai_parser import parse_reply
 from src.card_generator import generate_html
 from src.screenshot import html_to_png
-from src.line_sender import send_image
 from src.archive import (
     load_manifest,
-    save_manifest,
     is_already_sent,
     find_reusable,
-    add_entry,
-    generate_index_html,
     ARCHIVE_SURGE_DOMAIN,
 )
 
 JST = pytz.timezone("Asia/Tokyo")
 WEEKDAYS = ["月", "火", "水", "木", "金", "土", "日"]
 ARCHIVE_DIR = Path(__file__).parent / "archive"
-DRY_RUN = os.environ.get("DRY_RUN", "").lower() == "true"
+READY_FILE = ARCHIVE_DIR / ".ready_to_send"
 
 
 def main():
@@ -63,7 +59,7 @@ def main():
     reply_text = replies[-1]["text"]
     print(f"📩 返信テキスト: {reply_text}")
 
-    # ── 4. Claude で解析 ──
+    # ── 4. 解析 ──
     parsed = parse_reply(reply_text)
     print(f"🤖 解析結果: {json.dumps(parsed, ensure_ascii=False)}")
 
@@ -90,60 +86,16 @@ def main():
         png_url = f"{ARCHIVE_SURGE_DOMAIN}/cards/{png_filename}"
         png_saved = True
 
-    # ── 8. surge.sh にデプロイ（LINE送信前に画像URLを有効化）──
-    deployed = _deploy_archive()
-
-    # ── 9. LINEに送信 ──
-    if DRY_RUN:
-        print(f"[DRY RUN] LINE送信をスキップ。URL: {png_url}")
-    elif not deployed:
-        print("❌ surgeデプロイ失敗のためLINE送信をスキップします。次回チェック時に再試行します。")
-        return
-    else:
-        print("📱 LINEに送信中...")
-        result = send_image(png_url)
-        print(f"✅ LINE送信完了: {result}")
-
-    # ── 10. マニフェスト更新 ──
-    entry = {
-        "date": today,
-        "time": parsed["time"],
-        "reason": parsed["reason"],
-        "character": parsed["character"],
-        "color_theme": parsed["color_theme"],
+    # ── 8. surge デプロイ・LINE送信の情報をファイルに書き出し ──
+    ready_data = {
+        "today": today,
         "png_url": png_url,
-        "sent_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "png_saved": png_saved,
+        "parsed": parsed,
         "reply_text": reply_text,
-        "reused": not png_saved,
     }
-    manifest = add_entry(manifest, entry)
-    save_manifest(manifest_path, manifest)
-
-    # ── 11. アーカイブ index.html 再生成 → 再デプロイ（manifest反映）──
-    index_html = generate_index_html(manifest)
-    (ARCHIVE_DIR / "index.html").write_text(index_html, encoding="utf-8")
-    print("📄 アーカイブ index.html を更新しました。")
-    _deploy_archive()  # index更新のデプロイは失敗しても致命的ではないため続行
-
-    print("🎉 完了！")
-
-
-def _deploy_archive() -> bool:
-    """surge.sh にデプロイする。成功したら True、失敗したら False を返す。"""
-    surge_token = os.environ.get("SURGE_TOKEN")
-    if not surge_token:
-        print("⚠️  SURGE_TOKEN が未設定のためデプロイをスキップします。")
-        return False
-
-    cmd = ["surge", str(ARCHIVE_DIR), "kitaku-archive.surge.sh"]
-    env = {**os.environ, "SURGE_TOKEN": surge_token}
-    result = subprocess.run(cmd, capture_output=True, text=True, env=env)
-    if result.returncode == 0:
-        print("🚀 surge.sh デプロイ完了: https://kitaku-archive.surge.sh")
-        return True
-    else:
-        print(f"❌ surge デプロイ失敗:\nstdout: {result.stdout}\nstderr: {result.stderr}")
-        return False
+    READY_FILE.write_text(json.dumps(ready_data, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"📝 .ready_to_send を作成しました。次のステップで surge デプロイ → LINE 送信を行います。")
 
 
 if __name__ == "__main__":
