@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-ARCHIVE_SURGE_DOMAIN = "https://kitaku-archive.surge.sh"
+ARCHIVE_SURGE_DOMAIN = "https://maji-kitaku.surge.sh"
 
 
 def load_manifest(path: Path) -> list:

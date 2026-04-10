@@ -56,7 +56,7 @@ jobs:
         if: steps.check_card.outputs.ready == 'true'
         env:
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
-        run: surge archive/ kitaku-archive.surge.sh
+        run: surge archive/ maji-kitaku.surge.sh
 
       - name: Send LINE and update archive
         if: steps.check_card.outputs.ready == 'true'
