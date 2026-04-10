@@ -1,11 +1,7 @@
 name: 帰宅時間レポート — 返信チェック＆LINE送信
 
 on:
-  schedule:
-    # JST 17:00〜23:00 の間、15分おきに実行、平日（月〜金）のみ（遅延考慮で1h前倒し）
-    # UTC 08:00〜14:00 = */15 8-14 * * 1-5  (〜14:45 UTC = 23:45 JST)
-    - cron: "*/15 8-14 * * 1-5"
-  workflow_dispatch:  # 手動実行（テスト用）
+  workflow_dispatch:  # cron-job.org から GitHub API 経由でトリガー
     inputs:
       dry_run:
         description: "LINE送信をスキップする（true/false）"

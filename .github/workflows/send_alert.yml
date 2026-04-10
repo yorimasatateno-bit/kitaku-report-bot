@@ -1,10 +1,7 @@
 name: 帰宅時間レポート — 18:00 Slackアラート送信
 
 on:
-  schedule:
-    # JST 17:00 = UTC 08:00、平日（月〜金）のみ（遅延考慮で1h前倒し）
-    - cron: "0 8 * * 1-5"
-  workflow_dispatch:  # 手動実行（テスト用）
+  workflow_dispatch:  # cron-job.org から GitHub API 経由でトリガー
 
 jobs:
   send-alert:
