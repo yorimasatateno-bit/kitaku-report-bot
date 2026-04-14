@@ -29,25 +29,27 @@ READY_FILE = ARCHIVE_DIR / ".ready_to_send"
 
 
 def main():
-    now_jst = datetime.now(JST)
-    today = now_jst.strftime("%Y-%m-%d")
-    date_str = f"{now_jst.year}年{now_jst.month}月{now_jst.day}日（{WEEKDAYS[now_jst.weekday()]}）"
-
     manifest_path = ARCHIVE_DIR / "manifest.json"
     manifest = load_manifest(manifest_path)
 
-    # ── 1. 今日分が送信済みなら終了 ──
-    if is_already_sent(manifest, today):
-        print(f"✅ {today} は送信済みです。スキップします。")
-        return
-
-    # ── 2. 今日のSlackアラートを探す ──
+    # ── 1. 直近のSlackアラートを探す ──
     user_id = os.environ["SLACK_USER_ID"]
     channel_id = open_dm_channel(user_id)
     alert_ts = get_today_alert_ts(channel_id)
 
     if not alert_ts:
-        print("⏳ 今日のアラートメッセージが見つかりません。スキップします。")
+        print("⏳ 直近のアラートメッセージが見つかりません。スキップします。")
+        return
+
+    # alert_tsのJST日付を「有効日付」とする（cronが深夜に遅延実行されても正しい日付を使う）
+    alert_jst = datetime.fromtimestamp(float(alert_ts), tz=JST)
+    today = alert_jst.strftime("%Y-%m-%d")
+    date_str = f"{alert_jst.year}年{alert_jst.month}月{alert_jst.day}日（{WEEKDAYS[alert_jst.weekday()]}）"
+    print(f"📅 有効日付（アラート送信日）: {today}")
+
+    # ── 2. 今日分が送信済みなら終了 ──
+    if is_already_sent(manifest, today):
+        print(f"✅ {today} は送信済みです。スキップします。")
         return
 
     # ── 3. スレッド返信を取得 ──

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 import pytz
 
 SLACK_API = "https://slack.com/api"
@@ -50,9 +50,15 @@ def post_alert(channel_id: str, date_str: str) -> str:
 
 
 def get_today_alert_ts(channel_id: str) -> str | None:
-    """本日分のアラートメッセージのtsを返す。見つからなければNone。"""
+    """直近のアラートメッセージのtsを返す。
+    cronの大幅遅延で日付をまたぐケースに対応するため、前日分も検索対象とする。
+    """
     now_jst = datetime.now(JST)
-    date_str = f"{now_jst.year}年{now_jst.month}月{now_jst.day}日"
+    yesterday_jst = now_jst - timedelta(days=1)
+    target_dates = {
+        f"{now_jst.year}年{now_jst.month}月{now_jst.day}日",
+        f"{yesterday_jst.year}年{yesterday_jst.month}月{yesterday_jst.day}日",
+    }
 
     resp = requests.get(
         f"{SLACK_API}/conversations.history",
@@ -65,7 +71,7 @@ def get_today_alert_ts(channel_id: str) -> str | None:
 
     for msg in data.get("messages", []):
         text = msg.get("text", "")
-        if "帰宅時間レポート" in text and date_str in text:
+        if "帰宅時間レポート" in text and any(d in text for d in target_dates):
             return msg["ts"]
     return None
 
