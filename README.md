@@ -1,17 +1,17 @@
 # 家蔵への帰宅時間レポートBot 🏠
 
-毎日18:00にSlack DMへアラートを送り、スレッド返信をもとにマジくん入りカード画像を生成して家族のLINEグループに送信するBot。
+毎日**平日17:00（JST）**にSlack DMへアラートを送り（GitHub Actions の遅延対策で Mac の launchd から `workflow_dispatch` を併用する運用も可）、スレッド返信をもとにマジくん入りカード画像を生成して家族のLINEグループに送信するBot。
 
 ## 動作フロー
 
 ```
-18:00 [GitHub Actions] send_alert.yml
-  → Slack自分DM に「今日何時に帰りますか？」を投稿
+平日17:00 JST [GitHub Actions] send_alert.yml（cron: UTC 08:00）
+  → Slack自分DM に帰宅時間レポートのアラートを投稿
 
 あなたがスレッドに返信
   例: "2030 コンテンツチェックが遅くまでかかって"
 
-18:00〜23:00 の間 15分おきに [GitHub Actions] check_reply.yml
+17:00〜23:45 JST 相当の窓で 15分おきに [GitHub Actions] check_reply.yml
   → Slack返信を確認
   → Claude API で時間・理由・感情を解析
   → Tailwind HTMLカードを生成 → Playwright でPNG化
@@ -120,8 +120,8 @@ python main_check.py
 
 ```
 .
-├── main_alert.py              # 18:00実行: Slackアラート送信
-├── main_check.py              # 15分おき実行: 返信チェック＆LINE送信
+├── main_alert.py              # 平日17:00 JST 想定: Slackアラート送信
+├── main_check.py              # 15分おき実行: 返信チェック〜カード生成（送信は workflow 側）
 ├── requirements.txt
 ├── src/
 │   ├── slack_client.py        # Slack API操作
@@ -137,14 +137,21 @@ python main_check.py
 │   ├── index.html             # アーカイブページ（自動生成）
 │   └── cards/                 # 生成されたPNG（自動保存）
 └── .github/workflows/
-    ├── send_alert.yml          # 18:00 JST cron
-    └── check_reply.yml         # 15分おき cron (18:00〜23:00 JST)
+    ├── send_alert.yml          # 17:00 JST cron（UTC 08:00）
+    └── check_reply.yml         # 15分おき cron（17:00〜23:45 JST 相当）
 ```
 
 ## アーカイブページ
 
-送信済みカードは [kitaku-archive.surge.sh](https://kitaku-archive.surge.sh) で確認できます。
+送信済みカードは [maji-kitaku.surge.sh](https://maji-kitaku.surge.sh) で確認できます（`src/archive.py` の `ARCHIVE_SURGE_DOMAIN` と一致）。
 
 ## 再利用ロジック
 
 同じ帰宅時刻・同じ理由で過去に生成されたカードがある場合、PNG生成をスキップして既存の画像URLを再利用します（Playwright実行コストを節約）。
+
+## 運用上の注意
+
+- **GitHub Actions の schedule の遅延**: 発火が数時間ずれることがある。正時に近い実行が必要なら、Mac 常駐時は `workflow_dispatch` を launchd 等から叩く運用が有効（トークンは **Classic PAT**、`repo` + `workflow`）。Fine-grained PAT だと `workflow_dispatch` が 403 になりやすい。
+- **日付ずれ（深夜に遅延実行）**: `get_today_alert_ts()` が前日アラートも拾い、`main_check.py` は `alert_ts` の JST 日付を有効日付にしている。
+- **トークン期限**: PAT / `SURGE_TOKEN` は失効前に再発行し、ローカル `.env` や GitHub Secrets を更新する。
+- **Mac がスリープ中**: launchd は動かない。代替は手動ディスパッチまたは Actions の schedule 任せ（遅延あり）。

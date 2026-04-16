@@ -1,5 +1,5 @@
 """
-main_alert.py — 18:00 に実行。Slack DM にアラートメッセージを投稿する。
+main_alert.py — 平日 17:00 JST 想定で実行。Slack DM にアラートメッセージを投稿する。
 """
 import os
 from datetime import datetime

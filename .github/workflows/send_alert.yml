@@ -1,4 +1,4 @@
-name: 帰宅時間レポート — 18:00 Slackアラート送信
+name: 帰宅時間レポート — 17:00 JST Slackアラート送信
 
 on:
   schedule:

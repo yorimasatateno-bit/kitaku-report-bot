@@ -30,7 +30,7 @@ def open_dm_channel(user_id: str) -> str:
 
 
 def post_alert(channel_id: str, date_str: str) -> str:
-    """18:00アラートメッセージを投稿し、メッセージのtsを返す。"""
+    """帰宅時間レポートのアラートを投稿し、メッセージのtsを返す。"""
     resp = requests.post(
         f"{SLACK_API}/chat.postMessage",
         json={
