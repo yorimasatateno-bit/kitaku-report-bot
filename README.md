@@ -153,5 +153,6 @@ python main_check.py
 
 - **GitHub Actions の schedule の遅延**: 発火が数時間ずれることがある。正時に近い実行が必要なら、Mac 常駐時は `workflow_dispatch` を launchd 等から叩く運用が有効（トークンは **Classic PAT**、`repo` + `workflow`）。Fine-grained PAT だと `workflow_dispatch` が 403 になりやすい。
 - **日付ずれ（深夜に遅延実行）**: `get_today_alert_ts()` が前日アラートも拾い、`main_check.py` は `alert_ts` の JST 日付を有効日付にしている。
+- **二重アラート / 二重 LINE**: 同一 JST 日は `main_alert.py` が履歴を見て **2通目を投稿しない**。返信探索は同日に複数ある場合 **最古のアラート** を採用。GitHub Actions は `concurrency` で同種ワークフローの同時実行を抑止。`main_send_line.py` は manifest 済みなら LINE を送らない。
 - **トークン期限**: PAT / `SURGE_TOKEN` は失効前に再発行し、ローカル `.env` や GitHub Secrets を更新する。
 - **Mac がスリープ中**: launchd は動かない。代替は手動ディスパッチまたは Actions の schedule 任せ（遅延あり）。

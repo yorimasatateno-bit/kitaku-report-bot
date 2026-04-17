@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 import pytz
 
-from src.slack_client import open_dm_channel, post_alert
+from src.slack_client import open_dm_channel, post_alert, alert_already_posted_today
 
 JST = pytz.timezone("Asia/Tokyo")
 WEEKDAYS = ["月", "火", "水", "木", "金", "土", "日"]
@@ -17,6 +17,11 @@ def main():
 
     user_id = os.environ["SLACK_USER_ID"]
     channel_id = open_dm_channel(user_id)
+
+    if alert_already_posted_today(channel_id, now):
+        print(f"⏭️  本日のアラートは既に送信済みです。スキップします。（{date_str}）")
+        return
+
     ts = post_alert(channel_id, date_str)
 
     print(f"✅ アラート送信完了")

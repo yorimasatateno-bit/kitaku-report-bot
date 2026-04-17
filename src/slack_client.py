@@ -7,6 +7,39 @@ import pytz
 
 SLACK_API = "https://slack.com/api"
 JST = pytz.timezone("Asia/Tokyo")
+_HISTORY_LIMIT = 30
+
+
+def _jst_date_key(dt: datetime) -> str:
+    """投稿本文に含まれる日付プレフィックス（例: 2026年4月17日）。"""
+    return f"{dt.year}年{dt.month}月{dt.day}日"
+
+
+def _collect_alert_tss_for_date(messages: list, date_key: str) -> list[str]:
+    tss: list[str] = []
+    for msg in messages:
+        text = msg.get("text", "")
+        if "帰宅時間レポート" in text and date_key in text:
+            tss.append(msg["ts"])
+    return tss
+
+
+def _oldest_ts(tss: list[str]) -> str | None:
+    if not tss:
+        return None
+    return min(tss, key=lambda s: float(s))
+
+
+def _fetch_im_history(channel_id: str) -> list:
+    resp = requests.get(
+        f"{SLACK_API}/conversations.history",
+        params={"channel": channel_id, "limit": _HISTORY_LIMIT},
+        headers=_headers(),
+    )
+    data = resp.json()
+    if not data.get("ok"):
+        raise RuntimeError(f"conversations.history failed: {data.get('error')}")
+    return data.get("messages", [])
 
 
 def _headers() -> dict:
@@ -49,31 +82,30 @@ def post_alert(channel_id: str, date_str: str) -> str:
     return data["ts"]
 
 
+def alert_already_posted_today(channel_id: str, day_jst: datetime) -> bool:
+    """同一JST日のアラートが既にあれば True（launchd と遅延 cron の二重投稿を防ぐ）。"""
+    date_key = _jst_date_key(day_jst)
+    messages = _fetch_im_history(channel_id)
+    return bool(_collect_alert_tss_for_date(messages, date_key))
+
+
 def get_today_alert_ts(channel_id: str) -> str | None:
-    """直近のアラートメッセージのtsを返す。
+    """対象日のアラートメッセージのtsを返す。
     cronの大幅遅延で日付をまたぐケースに対応するため、前日分も検索対象とする。
+    同一日に複数ある場合は **最古の ts**（先に投稿されたアラート）を採用する。
     """
     now_jst = datetime.now(JST)
     yesterday_jst = now_jst - timedelta(days=1)
-    target_dates = {
-        f"{now_jst.year}年{now_jst.month}月{now_jst.day}日",
-        f"{yesterday_jst.year}年{yesterday_jst.month}月{yesterday_jst.day}日",
-    }
+    today_key = _jst_date_key(now_jst)
+    yesterday_key = _jst_date_key(yesterday_jst)
 
-    resp = requests.get(
-        f"{SLACK_API}/conversations.history",
-        params={"channel": channel_id, "limit": 30},
-        headers=_headers(),
-    )
-    data = resp.json()
-    if not data.get("ok"):
-        raise RuntimeError(f"conversations.history failed: {data.get('error')}")
+    messages = _fetch_im_history(channel_id)
 
-    for msg in data.get("messages", []):
-        text = msg.get("text", "")
-        if "帰宅時間レポート" in text and any(d in text for d in target_dates):
-            return msg["ts"]
-    return None
+    today_ts = _oldest_ts(_collect_alert_tss_for_date(messages, today_key))
+    if today_ts:
+        return today_ts
+
+    return _oldest_ts(_collect_alert_tss_for_date(messages, yesterday_key))
 
 
 def get_thread_replies(channel_id: str, thread_ts: str) -> list[dict]:

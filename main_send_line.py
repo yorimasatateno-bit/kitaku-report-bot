@@ -17,6 +17,7 @@ from src.archive import (
     save_manifest,
     add_entry,
     generate_index_html,
+    is_already_sent,
 )
 
 JST = pytz.timezone("Asia/Tokyo")
@@ -37,6 +38,13 @@ def main():
     reply_text = data["reply_text"]
     png_saved = data["png_saved"]
 
+    manifest_path = ARCHIVE_DIR / "manifest.json"
+    manifest = load_manifest(manifest_path)
+    if is_already_sent(manifest, today):
+        print(f"⏭️  {today} は manifest 上ですでに送信済みです。LINE 送信をスキップします。")
+        READY_FILE.unlink()
+        return
+
     # ── LINE送信 ──
     if DRY_RUN:
         print(f"[DRY RUN] LINE送信をスキップ。URL: {png_url}")
@@ -46,8 +54,6 @@ def main():
         print(f"✅ LINE送信完了: {result}")
 
     # ── manifest更新 ──
-    manifest_path = ARCHIVE_DIR / "manifest.json"
-    manifest = load_manifest(manifest_path)
     entry = {
         "date": today,
         "time": parsed["time"],

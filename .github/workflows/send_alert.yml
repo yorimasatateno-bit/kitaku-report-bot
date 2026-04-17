@@ -1,5 +1,9 @@
 name: 帰宅時間レポート — 17:00 JST Slackアラート送信
 
+concurrency:
+  group: kitaku-send-alert-${{ github.ref }}
+  cancel-in-progress: false
+
 on:
   schedule:
     # JST 17:00 = UTC 08:00、平日（月〜金）のみ（遅延考慮で1h前倒し）
