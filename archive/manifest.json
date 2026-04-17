@@ -42,5 +42,16 @@
     "sent_at": "2026-04-16T08:16:02.681674Z",
     "reply_text": "21:20 オンラインセミナーに受けてから帰宅なんで",
     "reused": false
+  },
+  {
+    "date": "2026-04-17",
+    "time": "21:30",
+    "reason": "今日はこんな感じになるとみた",
+    "character": "tearful",
+    "color_theme": "blue",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-04-17.png",
+    "sent_at": "2026-04-17T08:15:57.184921Z",
+    "reply_text": "2130 今日はこんな感じになるとみた",
+    "reused": false
   }
 ]
