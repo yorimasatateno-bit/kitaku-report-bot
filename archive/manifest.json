@@ -53,5 +53,16 @@
     "sent_at": "2026-04-17T08:15:57.184921Z",
     "reply_text": "2130 今日はこんな感じになるとみた",
     "reused": false
+  },
+  {
+    "date": "2026-04-20",
+    "time": "20:20",
+    "reason": "目指せるかも。そんなタスクないはず",
+    "character": "anxious",
+    "color_theme": "amber",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-04-20.png",
+    "sent_at": "2026-04-20T08:15:57.997010Z",
+    "reply_text": "2020　目指せるかも。そんなタスクないはず",
+    "reused": false
   }
 ]
