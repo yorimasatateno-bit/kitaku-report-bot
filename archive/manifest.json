@@ -75,5 +75,16 @@
     "sent_at": "2026-04-21T16:01:12.130680Z",
     "reply_text": "2155 まあ編集者の意地見せようと頑張ったらね",
     "reused": false
+  },
+  {
+    "date": "2026-04-23",
+    "time": "20:20",
+    "reason": "今日はスムーズなほうだと思う",
+    "character": "anxious",
+    "color_theme": "amber",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-04-23.png",
+    "sent_at": "2026-04-23T11:43:47.026042Z",
+    "reply_text": "2020　今日はスムーズなほうだと思う",
+    "reused": false
   }
 ]
