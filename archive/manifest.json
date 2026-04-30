@@ -108,5 +108,16 @@
     "sent_at": "2026-04-28T18:12:36.455215Z",
     "reply_text": "2140 祝日前に仕上げとかないと…が多くて",
     "reused": false
+  },
+  {
+    "date": "2026-04-30",
+    "time": "22:30",
+    "reason": "懇親会も二次会はしない若いメンバーなのでそれくらいになるかな",
+    "character": "tearful",
+    "color_theme": "blue",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-04-30.png",
+    "sent_at": "2026-04-30T13:12:30.805439Z",
+    "reply_text": "2230 懇親会も二次会はしない若いメンバーなのでそれくらいになるかな",
+    "reused": false
   }
 ]
