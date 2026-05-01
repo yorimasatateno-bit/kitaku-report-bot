@@ -119,5 +119,16 @@
     "sent_at": "2026-04-30T13:12:30.805439Z",
     "reply_text": "2230 懇親会も二次会はしない若いメンバーなのでそれくらいになるかな",
     "reused": false
+  },
+  {
+    "date": "2026-05-01",
+    "time": "22:30",
+    "reason": "連休入る前に目処立てるためになのよね",
+    "character": "tearful",
+    "color_theme": "blue",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-05-01.png",
+    "sent_at": "2026-05-01T11:42:25.369460Z",
+    "reply_text": "2230 連休入る前に目処立てるためになのよね",
+    "reused": false
   }
 ]
