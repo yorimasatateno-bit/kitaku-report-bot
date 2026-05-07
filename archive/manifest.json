@@ -130,5 +130,16 @@
     "sent_at": "2026-05-01T11:42:25.369460Z",
     "reply_text": "2230 連休入る前に目処立てるためになのよね",
     "reused": false
+  },
+  {
+    "date": "2026-05-07",
+    "time": "20:30",
+    "reason": "目指します。早く帰るよう切り替えたい",
+    "character": "anxious",
+    "color_theme": "amber",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-05-07.png",
+    "sent_at": "2026-05-07T10:14:50.320894Z",
+    "reply_text": "2030 目指します。早く帰るよう切り替えたい",
+    "reused": false
   }
 ]
