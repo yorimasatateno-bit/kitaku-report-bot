@@ -141,5 +141,16 @@
     "sent_at": "2026-05-07T10:14:50.320894Z",
     "reply_text": "2030 目指します。早く帰るよう切り替えたい",
     "reused": false
+  },
+  {
+    "date": "2026-05-08",
+    "time": "23:00",
+    "reason": "今夜は吉成さんと豊洲で飲んでくる",
+    "character": "panicking",
+    "color_theme": "red",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-05-08.png",
+    "sent_at": "2026-05-08T09:07:13.155113Z",
+    "reply_text": "2300 今夜は吉成さんと豊洲で飲んでくる",
+    "reused": false
   }
 ]
