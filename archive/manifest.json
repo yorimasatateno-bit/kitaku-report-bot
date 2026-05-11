@@ -152,5 +152,16 @@
     "sent_at": "2026-05-08T09:07:13.155113Z",
     "reply_text": "2300 今夜は吉成さんと豊洲で飲んでくる",
     "reused": false
+  },
+  {
+    "date": "2026-05-11",
+    "time": "20:15",
+    "reason": "仕事の進みがまあまあで締め切りもなく",
+    "character": "anxious",
+    "color_theme": "amber",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-05-11.png",
+    "sent_at": "2026-05-11T10:54:18.846670Z",
+    "reply_text": "2015 仕事の進みがまあまあで締め切りもなく",
+    "reused": false
   }
 ]
