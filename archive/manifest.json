@@ -163,5 +163,16 @@
     "sent_at": "2026-05-11T10:54:18.846670Z",
     "reply_text": "2015 仕事の進みがまあまあで締め切りもなく",
     "reused": false
+  },
+  {
+    "date": "2026-05-12",
+    "time": "20:30",
+    "reason": "Jacからの帰宅に合わせたい",
+    "character": "anxious",
+    "color_theme": "amber",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-05-12.png",
+    "sent_at": "2026-05-12T10:25:06.257059Z",
+    "reply_text": "2030 Jacからの帰宅に合わせたい",
+    "reused": false
   }
 ]
