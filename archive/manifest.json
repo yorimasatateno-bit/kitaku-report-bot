@@ -174,5 +174,16 @@
     "sent_at": "2026-05-12T10:25:06.257059Z",
     "reply_text": "2030 Jacからの帰宅に合わせたい",
     "reused": false
+  },
+  {
+    "date": "2026-05-13",
+    "time": "20:00",
+    "reason": "進行がまあまあ進んだ",
+    "character": "anxious",
+    "color_theme": "amber",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-05-13.png",
+    "sent_at": "2026-05-13T10:14:25.657229Z",
+    "reply_text": "2000 進行がまあまあ進んだ",
+    "reused": false
   }
 ]
