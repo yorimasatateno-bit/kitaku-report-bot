@@ -185,5 +185,16 @@
     "sent_at": "2026-05-13T10:14:25.657229Z",
     "reply_text": "2000 進行がまあまあ進んだ",
     "reused": false
+  },
+  {
+    "date": "2026-05-14",
+    "time": "19:30",
+    "reason": "今日はレビューが少なくて済むはず",
+    "character": "standard",
+    "color_theme": "green",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-05-14.png",
+    "sent_at": "2026-05-14T10:08:34.695991Z",
+    "reply_text": "1930 今日はレビューが少なくて済むはず",
+    "reused": false
   }
 ]
