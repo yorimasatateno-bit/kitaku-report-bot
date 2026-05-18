@@ -207,5 +207,16 @@
     "sent_at": "2026-05-15T10:13:54.508748Z",
     "reply_text": "2020 週末前だしこれくらいでは帰りたい",
     "reused": false
+  },
+  {
+    "date": "2026-05-18",
+    "time": "20:00",
+    "reason": "今日はには出たいと思っている",
+    "character": "anxious",
+    "color_theme": "amber",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-05-18.png",
+    "sent_at": "2026-05-18T11:38:41.001403Z",
+    "reply_text": "2000 今日は19時には出たいと思っている",
+    "reused": false
   }
 ]
