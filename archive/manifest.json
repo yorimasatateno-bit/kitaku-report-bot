@@ -218,5 +218,16 @@
     "sent_at": "2026-05-18T11:38:41.001403Z",
     "reply_text": "2000 今日は19時には出たいと思っている",
     "reused": false
+  },
+  {
+    "date": "2026-05-19",
+    "time": "20:30",
+    "reason": "JAC帰りに間に合うように帰りたい",
+    "character": "anxious",
+    "color_theme": "amber",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-05-19.png",
+    "sent_at": "2026-05-19T10:54:40.440536Z",
+    "reply_text": "2030 JAC帰りに間に合うように帰りたい",
+    "reused": false
   }
 ]
