@@ -229,5 +229,16 @@
     "sent_at": "2026-05-19T10:54:40.440536Z",
     "reply_text": "2030 JAC帰りに間に合うように帰りたい",
     "reused": false
+  },
+  {
+    "date": "2026-05-20",
+    "time": "20:00",
+    "reason": "少しは早めに水曜くらい帰りたい",
+    "character": "anxious",
+    "color_theme": "amber",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-05-20.png",
+    "sent_at": "2026-05-20T10:45:40.723324Z",
+    "reply_text": "2000 少しは早めに水曜くらい帰りたい",
+    "reused": false
   }
 ]
