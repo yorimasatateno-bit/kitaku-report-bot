@@ -240,5 +240,16 @@
     "sent_at": "2026-05-20T10:45:40.723324Z",
     "reply_text": "2000 少しは早めに水曜くらい帰りたい",
     "reused": false
+  },
+  {
+    "date": "2026-05-21",
+    "time": "20:00",
+    "reason": "うん、自分時間を作るためにも早く帰る！",
+    "character": "anxious",
+    "color_theme": "amber",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-05-21.png",
+    "sent_at": "2026-05-21T10:59:38.483467Z",
+    "reply_text": "2000 うん、自分時間を作るためにも早く帰る！",
+    "reused": false
   }
 ]
