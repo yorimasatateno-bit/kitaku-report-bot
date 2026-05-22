@@ -251,5 +251,16 @@
     "sent_at": "2026-05-21T10:59:38.483467Z",
     "reply_text": "2000 うん、自分時間を作るためにも早く帰る！",
     "reused": false
+  },
+  {
+    "date": "2026-05-22",
+    "time": "22:40",
+    "reason": "国立だし、そこまでかからんはず",
+    "character": "panicking",
+    "color_theme": "red",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-05-22.png",
+    "sent_at": "2026-05-22T10:43:02.238249Z",
+    "reply_text": "2240 国立だし、そこまでかからんはず",
+    "reused": false
   }
 ]
