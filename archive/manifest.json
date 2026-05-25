@@ -262,5 +262,16 @@
     "sent_at": "2026-05-22T10:43:02.238249Z",
     "reply_text": "2240 国立だし、そこまでかからんはず",
     "reused": false
+  },
+  {
+    "date": "2026-05-25",
+    "time": "19:50",
+    "reason": "コンテンツチェックを持ち帰って仕事する",
+    "character": "anxious",
+    "color_theme": "amber",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-05-25.png",
+    "sent_at": "2026-05-25T11:44:29.929880Z",
+    "reply_text": "1950　コンテンツチェックを持ち帰って仕事する",
+    "reused": false
   }
 ]
