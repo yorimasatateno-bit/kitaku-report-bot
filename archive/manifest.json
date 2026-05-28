@@ -295,5 +295,16 @@
     "sent_at": "2026-05-27T11:30:45.970332Z",
     "reply_text": "1930 今日は頑張る",
     "reused": false
+  },
+  {
+    "date": "2026-05-28",
+    "time": "21:30",
+    "reason": "明日の月次総会資料を用意するからね、、、",
+    "character": "tearful",
+    "color_theme": "blue",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-05-28.png",
+    "sent_at": "2026-05-28T11:30:20.374409Z",
+    "reply_text": "2130 明日の月次総会資料を用意するからね、、、",
+    "reused": false
   }
 ]
