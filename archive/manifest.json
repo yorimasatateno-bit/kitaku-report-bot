@@ -306,5 +306,16 @@
     "sent_at": "2026-05-28T11:30:20.374409Z",
     "reply_text": "2130 明日の月次総会資料を用意するからね、、、",
     "reused": false
+  },
+  {
+    "date": "2026-05-29",
+    "time": "23:00",
+    "reason": "総会終わりだからね。",
+    "character": "panicking",
+    "color_theme": "red",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-05-29.png",
+    "sent_at": "2026-05-29T11:20:39.144894Z",
+    "reply_text": "2300 総会終わりだからね。",
+    "reused": false
   }
 ]
