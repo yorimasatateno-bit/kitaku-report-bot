@@ -317,5 +317,16 @@
     "sent_at": "2026-05-29T11:20:39.144894Z",
     "reply_text": "2300 総会終わりだからね。",
     "reused": false
+  },
+  {
+    "date": "2026-06-01",
+    "time": "21:00",
+    "reason": "今日はこれくらいはやらないと。",
+    "character": "anxious",
+    "color_theme": "amber",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-06-01.png",
+    "sent_at": "2026-06-01T13:28:27.173232Z",
+    "reply_text": "2100 今日はこれくらいはやらないと。",
+    "reused": false
   }
 ]
