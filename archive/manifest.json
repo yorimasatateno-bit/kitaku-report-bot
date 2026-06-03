@@ -328,5 +328,16 @@
     "sent_at": "2026-06-01T13:28:27.173232Z",
     "reply_text": "2100 今日はこれくらいはやらないと。",
     "reused": false
+  },
+  {
+    "date": "2026-06-03",
+    "time": "23:30",
+    "reason": "結局交通の弁からも遅くなってしまう",
+    "character": "panicking",
+    "color_theme": "red",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-06-03.png",
+    "sent_at": "2026-06-03T17:33:53.770308Z",
+    "reply_text": "2330 結局交通の弁からも遅くなってしまう",
+    "reused": false
   }
 ]
