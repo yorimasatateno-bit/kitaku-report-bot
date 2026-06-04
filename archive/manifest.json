@@ -339,5 +339,16 @@
     "sent_at": "2026-06-03T17:33:53.770308Z",
     "reply_text": "2330 結局交通の弁からも遅くなってしまう",
     "reused": false
+  },
+  {
+    "date": "2026-06-04",
+    "time": "21:00",
+    "reason": "原稿が仕上がらない。。。",
+    "character": "anxious",
+    "color_theme": "amber",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-06-04.png",
+    "sent_at": "2026-06-04T10:55:49.967954Z",
+    "reply_text": "2100 原稿が仕上がらない。。。",
+    "reused": false
   }
 ]
