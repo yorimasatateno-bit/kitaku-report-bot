@@ -361,5 +361,16 @@
     "sent_at": "2026-06-05T11:19:10.958588Z",
     "reply_text": "2200 原稿がんばる…ってか予定期限アウト気味だし",
     "reused": false
+  },
+  {
+    "date": "2026-06-08",
+    "time": "20:20",
+    "reason": "なんか今日は帰りたい",
+    "character": "anxious",
+    "color_theme": "amber",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-06-08.png",
+    "sent_at": "2026-06-08T12:22:31.199020Z",
+    "reply_text": "2020 なんか今日は帰りたい",
+    "reused": false
   }
 ]
