@@ -372,5 +372,16 @@
     "sent_at": "2026-06-08T12:22:31.199020Z",
     "reply_text": "2020 なんか今日は帰りたい",
     "reused": false
+  },
+  {
+    "date": "2026-06-09",
+    "time": "20:20",
+    "reason": "今日はこれくらい",
+    "character": "anxious",
+    "color_theme": "amber",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-06-09.png",
+    "sent_at": "2026-06-09T10:53:00.104169Z",
+    "reply_text": "2020 今日はこれくらい",
+    "reused": false
   }
 ]
