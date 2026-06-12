@@ -405,5 +405,16 @@
     "sent_at": "2026-06-11T12:03:39.398364Z",
     "reply_text": "2030 早く帰りたいけどな",
     "reused": false
+  },
+  {
+    "date": "2026-06-12",
+    "time": "20:00",
+    "reason": "目指すぜ！",
+    "character": "anxious",
+    "color_theme": "amber",
+    "png_url": "https://maji-kitaku.surge.sh/cards/2026-06-12.png",
+    "sent_at": "2026-06-12T11:36:39.445937Z",
+    "reply_text": "2000 目指すぜ！",
+    "reused": false
   }
 ]
